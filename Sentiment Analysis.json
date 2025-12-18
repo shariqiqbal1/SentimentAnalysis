@@ -19,14 +19,14 @@
           "value": "1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw",
           "mode": "list",
           "cachedResultName": "Reddit_Sentinel",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw/edit?usp=drivesdk"
+          "cachedResultUrl": "your-doc-url"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw/edit#gid=0"
+          "cachedResultUrl": "your-sheet"
         },
         "options": {}
       },
@@ -82,7 +82,7 @@
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw/edit?gid=0#gid=0",
+          "value": "your-doc-url",
           "mode": "url"
         },
         "sheetName": {
@@ -90,7 +90,7 @@
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw/edit#gid=0"
+          "cachedResultUrl": "your-doc-url"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -195,7 +195,7 @@
           "parameters": [
             {
               "name": "api_key",
-              "value": "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"
+              "value": "your-key"
             },
             {
               "name": "query",
