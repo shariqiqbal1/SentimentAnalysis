@@ -27,8 +27,7 @@ Place your screenshots in a `screenshots` folder and update paths if needed.
 
 ### n8n workflow
 
-<img width="806" height="415" alt="image" src="https://github.com/user-attachments/assets/a13d98b4-4f1a-460d-b350-e4e4666bf126" />
-
+<img width="746" height="306" alt="image" src="https://github.com/user-attachments/assets/ddafb89a-96d6-4bfd-b33c-1695e58d4fa7" />
 
 ### Sample report in Google Docs
 
