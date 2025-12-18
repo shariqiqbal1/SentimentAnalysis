@@ -1,4 +1,4 @@
-# Voice of Customer Sentiment Agent (n8n + Gemini)
+# Voice of Customer Sentiment Agent (Google Docs + n8n + Tavily + Gemini)
 
 This repo contains an n8n workflow that turns Reddit and Twitter / X chatter into feature-level Voice of Customer reports.
 
