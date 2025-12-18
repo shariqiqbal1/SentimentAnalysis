@@ -1,0 +1,302 @@
+{
+  "name": "Sentiment Analysis",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "06a569ef-3ca9-4fc4-9211-4afb94880fc2",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw",
+          "mode": "list",
+          "cachedResultName": "Reddit_Sentinel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a99540fb-739f-4577-b4b4-311d9fb2bc4a",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ApCak9nV1ojGAPgu",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash-lite",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash-lite"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a Senior Product Strategist conducting deep market research.\nI have scraped recent user discussions from Reddit and Twitter regarding:\n\nProduct: {{ $('Loop Over Items').item.json.Product }}\n\nFeature: {{ $('Loop Over Items').item.json['Feature/Topic'] }}\n\nHere is the raw search data:\n{{ JSON.stringify($('Tavily').item.json.results) }}\n\nAnalyze this data and produce a \"Voice of Customer\" insight report.\nDo not just summarize; analyze the *emotional context* and *hidden friction points*.\n\nOutput strictly in this format:\n\n**1. The Vibe Check (Sentiment Nuance):**\n(Describe the emotional state. Are they frustrated, hopeful, sarcastic, or delighted? Be specific.)\n\n**2. The \"Real\" Problems (Deep Dive):**\n(Identify 2-3 specific pain points. Don't say \"it's slow\" - explain *when* it's slow and *why* it hurts their workflow. Cite specific scenarios mentioned.)\n\n**3. Direct Quotes/Verbatims:**\n(Extract 2 short, powerful quotes that capture the user's voice.)\n\n**4. Strategic Recommendation:**\n(One actionable sentence on what the Product Manager should do next.)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "cf0fbfef-0e33-43af-9b4b-cf4c58d0c9c6",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "4WRjM6WSs9OAb2bV",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NyfJa_USlqbByDeUJHwJb7z4zcnwFDTQGPlHUxIruKw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get row(s) in sheet').item.json.row_number }}",
+            "Date Run": "={{ $now.format('yyyy-MM-dd') }}",
+            "AI Report": "={{ $json.content.parts[0].text }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Product",
+              "displayName": "Product",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Feature/Topic",
+              "displayName": "Feature/Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Date Run",
+              "displayName": "Date Run",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AI Report",
+              "displayName": "AI Report",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        976,
+        0
+      ],
+      "id": "8e29f014-07ef-48b3-a004-03c6a7aa14af",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ApCak9nV1ojGAPgu",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        304,
+        288
+      ],
+      "id": "fb736364-8ae5-4913-af3b-582be941358a",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "api_key",
+              "value": "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"
+            },
+            {
+              "name": "query",
+              "value": "={{ $json.Product }} {{ $json.Feature }} (site:reddit.com OR site:twitter.com OR site:x.com) -site:promoted"
+            },
+            {
+              "name": "include_answer",
+              "value": "basic"
+            },
+            {
+              "name": "search_depth",
+              "value": "basic"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        480,
+        0
+      ],
+      "id": "0e77f29d-a6b5-4018-b6df-0c68ad80bc8e",
+      "name": "Tavily"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Tavily",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9757080f-7f47-4bdb-9913-07acec80b9d8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ba1c05e80133909f78de73359dd8c44589ba9110128cf010a937430dbda2aa58"
+  },
+  "id": "hZnodjq1nbPiSfMv",
+  "tags": []
+}
