@@ -30,7 +30,7 @@ Place your screenshots in a `screenshots` folder and update paths if needed.
 <img width="806" height="415" alt="image" src="https://github.com/user-attachments/assets/a13d98b4-4f1a-460d-b350-e4e4666bf126" />
 
 
-### Sample report in Google Sheets
+### Sample report in Google Docs
 
 <img width="1217" height="722" alt="image" src="https://github.com/user-attachments/assets/525adefd-7fbc-4235-919b-2eebf02869e1" />
 
